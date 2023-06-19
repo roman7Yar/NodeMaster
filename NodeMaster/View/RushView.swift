@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RushView: View {
 
-    let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
+    @State private var timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
 
     @Binding var isPresented: Bool
     
@@ -69,7 +69,7 @@ struct RushView: View {
                     isPresented = false
                 }),
                 secondaryButton: .cancel(Text("Cansel"), action: {
-                    showingAlert = false
+                    timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
                 })
             )
         })
@@ -95,15 +95,12 @@ struct RushView: View {
         Button(action: {
             if gameVM.isWin == nil {
                 showingAlert = true
+                timer.upstream.connect().cancel()
             } else {
                 isPresented = false
             }
         }) {
-            Image(systemName: "arrow.left")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(height: 30)
-                .foregroundColor(.white)
+            BackButton()
         }
     }
     
@@ -111,17 +108,7 @@ struct RushView: View {
         Button(action: {
             
         }) {
-            ZStack {
-                Image(systemName: "questionmark")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(height: 20)
-                    .foregroundColor(.white)
-                Image(systemName: "circle")
-                    .resizable()
-                    .frame(width: 40, height: 40)
-                    .foregroundColor(.red)
-            }
+            CircleButton(systemName: "questionmark", size: 40)
         }
     }
   

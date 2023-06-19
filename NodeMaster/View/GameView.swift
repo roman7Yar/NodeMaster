@@ -9,7 +9,7 @@ import SwiftUI
 
 struct GameView: View {
     
-    let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
+    @State private var timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
     
     @ObservedObject var gameVM: GameViewModel
     
@@ -18,7 +18,6 @@ struct GameView: View {
     @State private var showingAlert = false
     @State private var selectedElement = 0
     @State private var desiredIndex: Int? = nil
-    @State private var barButtonHeight = CGFloat(30)
     @State private var time: TimeInterval = 20
     @State private var items: [Int]
    
@@ -123,6 +122,7 @@ struct GameView: View {
                     isPresented = false
                 }),
                 secondaryButton: .cancel(Text("Cansel"), action: {
+                    timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
                 })
             )
         })
@@ -148,15 +148,12 @@ struct GameView: View {
         Button(action: {
             if gameVM.isWin == nil {
                 showingAlert = true
+                timer.upstream.connect().cancel()
             } else {
                 isPresented = false
             }
         }) {
-            Image(systemName: "arrow.left")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(height: barButtonHeight)
-                .foregroundColor(.white)
+            BackButton()
         }
     }
     
@@ -164,17 +161,7 @@ struct GameView: View {
         Button(action: {
             
         }) {
-            ZStack {
-                Image(systemName: "questionmark")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(height: 20)
-                    .foregroundColor(.white)
-                Image(systemName: "circle")
-                    .resizable()
-                    .frame(width: 40, height: 40)
-                    .foregroundColor(.red)
-            }
+            CircleButton(systemName: "questionmark", size: 40)
         }
     }
     

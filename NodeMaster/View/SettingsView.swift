@@ -58,11 +58,7 @@ struct SettingsView: View {
         Button(action: {
             isPresented = false
         }) {
-            Image(systemName: "arrow.left")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(height: 30)
-                .foregroundColor(.white)
+            BackButton()
         }
     }
 }

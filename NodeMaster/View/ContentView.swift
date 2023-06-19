@@ -34,16 +34,7 @@ struct ContentView: View {
                         Button {
                             showingSettings = true
                         } label: {
-                            ZStack {
-                                Image(systemName: "gearshape.fill")
-                                    .resizable()
-                                    .frame(width: 20, height: 20)
-                                    .foregroundColor(.white)
-                                Image(systemName: "circle")
-                                    .resizable()
-                                    .frame(width: 40, height: 40)
-                                    .foregroundColor(.red)
-                            }
+                            CircleButton(systemName: "gearshape.fill", size: 40)
                         }
                         Spacer()
                     }
@@ -111,18 +102,4 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
-struct MenuButton: View {
-    
-    let title: String
-    
-    var body: some View {
-        Text(title)
-            .foregroundColor(.white)
-            .font(.largeTitle)
-            .bold()
-            .frame(width: 250)
-            .padding(8)
-            .background(Color.red)
-            .cornerRadius(16)
-    }
-}
+

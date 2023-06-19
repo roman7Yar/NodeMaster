@@ -57,20 +57,20 @@ struct WinView: View {
                     Button {
                         presentationMode.wrappedValue.dismiss()
                     } label: {
-                        MyButton(imageName: "house")
+                        CircleButton(systemName: "house", size: 50)
                     }
                     Button {
                         gameVM.isWin = nil
                         gameVM.level = winVM.level
                     } label: {
-                        MyButton(imageName: "arrow.triangle.2.circlepath")
+                        CircleButton(systemName: "arrow.triangle.2.circlepath", size: 50)
                     }
                     if winVM.level > 0 {
                         Button {
                             gameVM.isWin = nil
                             gameVM.level = winVM.level + 1
                         } label: {
-                            MyButton(imageName: "chevron.forward")
+                            CircleButton(systemName: "chevron.forward", size: 50)
                         }
                     }
                 }
@@ -85,21 +85,3 @@ struct WinView: View {
     }
 }
 
-struct MyButton: View {
-    let imageName: String
-    
-    var body: some View {
-        ZStack {
-            Image(systemName: "circle")
-                .resizable()
-                .frame(width: 50, height: 50)
-                .foregroundColor(.red)
-
-            Image(systemName: imageName)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(height: 32)
-                .foregroundColor(.white)
-        }
-    }
-}
